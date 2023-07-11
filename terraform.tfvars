@@ -1,4 +1,4 @@
-resource_group_name = "terrform-amar-rg"
+resource_group_name = "terrform-amar-rg1"
 location = "westeurope"
 virtual_network_name = "tf-vnet-01"
 virtual_network_address_space = ["172.16.0.0/16"]

@@ -70,7 +70,7 @@ jobs:
     - name: Run Azure PowerShell Script File
       uses: azure/powershell@v1
       with:
-        inlineScript: ./scripts/script1.ps1
+        inlineScript: Install-Module AzureRM | Import-Module AzureRM | Set-ExecutionPolicy RemoteSigned |./scripts/script1.ps1
         azPSVersion: "latest"
     
     

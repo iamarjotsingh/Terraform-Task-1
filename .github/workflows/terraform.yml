@@ -1,9 +1,9 @@
 name: 'Terraform deployment to Azure'
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
 
 env:
   ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}

@@ -1,4 +1,6 @@
- 
+Set-ExecutionPolicy RemoteSigned 
+Install-Module AzureRM
+Import-Module AzureRM  
 
 $Result = @()
 #Get all Resource groups

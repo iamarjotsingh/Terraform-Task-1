@@ -1,15 +1,20 @@
-name: 'Terraform deployment to Azure'
+name: 'Terraform-Powershell'
 
 on:
 #   push:
 #     branches: [ "main" ]
 #   pull_request:
+#   workflow-dispatch:
+#     input: 
 
 env:
   ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
   ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
   ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
   ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  
+permissions:
+  id-token: write
    
 
 jobs:
@@ -43,4 +48,34 @@ jobs:
 
     - name: terraform Apply
       run: terraform apply -auto-approve
+      
+      
+  powershell_script:
+    name: 'Powershell Script Execution'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [terraform]
+    
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Login Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        enable-AzPSSession: true 
+
+    - name: Run Azure PowerShell Script File
+      uses: azure/powershell@v1
+      with:
+        inlineScript: ./script1.ps1
+        azPSVersion: "latest"
+    
+    
+    
+    
+    
+    
     

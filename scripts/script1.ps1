@@ -22,4 +22,4 @@ Location = $VM.Location
 $i++
 }
 #$Result | FT
-$Result | Export-CSV "csv-file.CSV" -NoTypeInformation -Encoding UTF8
+$Result | Export-CSV "C:\AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8

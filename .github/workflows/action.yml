@@ -1,8 +1,8 @@
 name: 'Terraform-Powershell'
 
 on:
-#   push:
-#     branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 #   pull_request:
 #   workflow-dispatch:
 #     input: 
@@ -61,11 +61,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Login Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
+#     - name: Login Azure
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{secrets.AZURE_CREDENTIALS}}
+#         enable-AzPSSession: true 
 
     - name: Run Azure PowerShell Script File
       uses: azure/powershell@v1

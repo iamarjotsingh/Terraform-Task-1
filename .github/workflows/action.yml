@@ -54,7 +54,7 @@ jobs:
     name: 'Powershell Script Execution'
     runs-on: ubuntu-latest
     environment: production
-    needs: [terraform]
+#     needs: [terraform]
     
     steps:
     

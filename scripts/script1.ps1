@@ -21,5 +21,5 @@ Location = $VM.Location
 }
 $i++
 }
-#$Result | FT
-$Result | Export-CSV "AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
+$Result | FT
+# $Result | Export-CSV "AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8

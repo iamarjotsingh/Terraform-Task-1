@@ -21,14 +21,16 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true 
 
+    
     - name: Run PowerShell script
-      run: powershell -File ./scripts/script1.ps1
       id: powershell
-
-    - name: Save output to CSV
+      shell: pwsh
       run: |
-        $output = "${{ steps.powershell.outputs.output }}"
-        $output | ConvertFrom-Json | Export-Csv output.csv -NoTypeInformation
+          # Your PowerShell script commands here
+          powershell -File ./scripts/script1.ps1
+          $output = Invoke-Expression -Command "powershell -File ./scripts/script1.ps1"
+          $output | Export-Csv -Path output.csv -NoTypeInformation
+
 
     - name: Upload CSV artifact
       uses: actions/upload-artifact@v2

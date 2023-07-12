@@ -18,36 +18,36 @@ permissions:
    
 
 jobs:
-  terraform:
-    name: 'Terraform Execution'
-    runs-on: ubuntu-latest
-    environment: production
+  # terraform:
+  #   name: 'Terraform Execution'
+  #   runs-on: ubuntu-latest
+  #   environment: production
 
    
-    defaults:
-      run:
-        shell: bash
+  #   defaults:
+  #     run:
+  #       shell: bash
 
-    steps:
+  #   steps:
       
-    - name: Checkout
-      uses: actions/checkout@v2
+  #   - name: Checkout
+  #     uses: actions/checkout@v2
 
     
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  #   - name: Setup Terraform
+  #     uses: hashicorp/setup-terraform@v1
+  #     with:
+  #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
    
-    - name: Terraform Init
-      run: terraform init
+  #   - name: Terraform Init
+  #     run: terraform init
      
-    - name: Terraform Plan
-      run: terraform plan 
+  #   - name: Terraform Plan
+  #     run: terraform plan 
 
-    - name: terraform Apply
-      run: terraform apply -auto-approve
+  #   - name: terraform Apply
+  #     run: terraform apply -auto-approve
       
       
   powershell_script:

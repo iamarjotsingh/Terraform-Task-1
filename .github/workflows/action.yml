@@ -70,8 +70,13 @@ jobs:
     - name: Run Azure PowerShell Script File
       uses: azure/powershell@v1
       with:
-        inlineScript: ./scripts/script1.ps1 | Export-CSV "AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
+        inlineScript: ./scripts/script1.ps1 #| Export-CSV "AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
         azPSVersion: "latest"
+
+    - name: csv output
+      shell: pwsh
+      run: |
+          ./scripts/script1.ps1 | Export-CSV "AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
     
     
     

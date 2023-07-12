@@ -1,88 +1,102 @@
-name: 'Terraform-Powershell'
+# name: 'Terraform-Powershell'
 
-on:
-  push:
-    branches: [ "main" ]
-#   pull_request:
-#   workflow-dispatch:
-#     input: 
+# on:
+#   push:
+#     branches: [ "main" ]
+# #   pull_request:
+# #   workflow-dispatch:
+# #     input: 
 
 env:
   ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
   ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
   ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
   ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-
-
+  
+permissions:
+  id-token: write
    
 
 jobs:
-
- 
   # terraform:
   #   name: 'Terraform Execution'
   #   runs-on: ubuntu-latest
   #   environment: production
 
    
-  #   defaults:
-  #     run:
-  #       shell: bash
+#   #   defaults:
+#   #     run:
+#   #       shell: bash
 
-  #   steps:
+#   #   steps:
       
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
+#   #   - name: Checkout
+#   #     uses: actions/checkout@v2
 
     
-  #   - name: Setup Terraform
-  #     uses: hashicorp/setup-terraform@v1
-  #     with:
-  #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#   #   - name: Setup Terraform
+#   #     uses: hashicorp/setup-terraform@v1
+#   #     with:
+#   #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
    
-  #   - name: Terraform Init
-  #     run: terraform init
+#   #   - name: Terraform Init
+#   #     run: terraform init
      
-  #   - name: Terraform Plan
-  #     run: terraform plan 
+#   #   - name: Terraform Plan
+#   #     run: terraform plan 
 
-  #   - name: terraform Apply
-  #     run: terraform apply -auto-approve
+#   #   - name: terraform Apply
+#   #     run: terraform apply -auto-approve
       
       
   powershell_script:
     name: 'Powershell Script Execution'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     environment: production
+#     needs: [terraform]
     
-    steps:
+#     steps:
     
-    - name: Checkout
-      uses: actions/checkout@v3
+#     - name: Checkout
+#       uses: actions/checkout@v3
 
-    - name: Login Azure
-      uses: azure/login@v1
+#     - name: Login Azure
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{secrets.AZURE_CREDENTIALS}}
+#         enable-AzPSSession: true 
+
+    - name: Run Azure PowerShell Script File
+      uses: azure/powershell@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
+        inlineScript: #./scripts/script1.ps1 
+            | 
+            $Result = @()
+            #Get all Resource groups
+            $AllRGs = Get-AzResourceGroup
+            $TotalGroups = $AllRGs.Count
+            $i = 1 
+            ForEach ($RG in $AllRGs) {
+            Write-Progress -Activity "Processing $($RG.ResourceGroupName)" -Status "$i out of $TotalGroups Resource groups completed"
+            #Fetch virtual machines in the group
+            $VMList = Get-AzVM -ResourceGroupName $RG.ResourceGroupName -Status
+              
+            ForEach ($VM in $VMList) {
+            $Result += New-Object PSObject -property $([ordered]@{ 
+            VMName = $VM.Name
+            VMStatus  = $VM.PowerState
+            ProvisioningState = $VM.ProvisioningState
+            ResourceGroup = $VM.ResourceGroupName
+            Location = $VM.Location
+            })
+            }
+            $i++
+            }
+            $Result | FT # alias Format Table
 
-    - name: Run PowerShell script
-      run: powershell -File ./scripts/script1.ps1
-      id: powershell
-
-    - name: Save output to CSV
-      run: |
-        $output = "${{ steps.powershell.outputs.output }}"
-        $output | ConvertFrom-Json | Export-Csv output.csv -NoTypeInformation
-
-    - name: Upload CSV artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: script-output
-        path: output.csv
-
-   
+            $Result | Export-CSV -Path "C:/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
+        azPSVersion: "latest"
 
     
     

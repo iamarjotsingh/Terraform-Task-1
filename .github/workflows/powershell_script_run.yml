@@ -24,6 +24,7 @@ jobs:
 
     - name: Run Azure PowerShell Script File
       uses: azure/powershell@v1
+      id: step1
       with:
         inlineScript: #./scripts/script1.ps1 
             | 
@@ -49,7 +50,8 @@ jobs:
             $i++
             }
             $Result | FT # alias Format Table
-
+             "output=$Result" >> $env:GITHUB_OUTPUT
             $Result | Export-CSV -Path "C:/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
         azPSVersion: "latest"
-        run: 
+        run: Write-Output ${{ steps.step1.outputs.output }} >> abc.csv
+    

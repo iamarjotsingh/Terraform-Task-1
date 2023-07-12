@@ -1,4 +1,9 @@
+name: 'Powershell'
 
+on:
+  push:
+    branches: [ "main" ]
+    
 jobs:
    powershell_script:
     name: 'Powershell Script Execution'
@@ -47,3 +52,4 @@ jobs:
 
             $Result | Export-CSV -Path "C:/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
         azPSVersion: "latest"
+        run: 

@@ -22,7 +22,7 @@ jobs:
         enable-AzPSSession: true 
 
     - name: Run PowerShell script
-      run: powershell -File path/to/script.ps1
+      run: powershell -File ./scripts/script1.ps1
       id: powershell
 
     - name: Save output to CSV

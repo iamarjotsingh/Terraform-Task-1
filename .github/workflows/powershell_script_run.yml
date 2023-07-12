@@ -27,8 +27,8 @@ jobs:
       shell: pwsh
       run: |
           # Your PowerShell script commands here
-          powershell -File ./scripts/script1.ps1
-          $output = Invoke-Expression -Command "powershell -File ./scripts/script1.ps1"
+          pwsh -File ./scripts/script1.ps1
+          $output = Invoke-Expression -Command "pwsh -File ./scripts/script1.ps1"
           $output | Export-Csv -Path output.csv -NoTypeInformation
 
 

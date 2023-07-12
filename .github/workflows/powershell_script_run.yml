@@ -50,8 +50,8 @@ jobs:
             $i++
             }
             $Result | FT # alias Format Table
-             "output=$Result" >> $env:GITHUB_OUTPUT
-            $Result | Export-CSV -Path "C:/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
+             #"output=$Result" >> $env:GITHUB_OUTPUT
+            Write-Output $Result | Export-CSV -Path "C:/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
         azPSVersion: "latest"
-        run: Write-Output ${{ steps.step1.outputs.output }} >> abc.csv
+       # run: Write-Output ${{ steps.step1.outputs.output }} >> abc.csv
     

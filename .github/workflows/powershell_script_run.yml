@@ -24,12 +24,14 @@ jobs:
     
     - name: Run PowerShell script
       id: powershell
-      shell: pwsh
-      run: |
+      uses: azure/powershell@v1
+      with:
+       inlineScript: |
           # Your PowerShell script commands here
           pwsh -File ./scripts/script1.ps1
           $output = Invoke-Expression -Command "pwsh -File ./scripts/script1.ps1"
           $output | Export-Csv -Path output.csv -NoTypeInformation
+       azPSVersion: "latest"
 
 
     - name: Upload CSV artifact

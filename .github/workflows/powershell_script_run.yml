@@ -29,7 +29,7 @@ jobs:
           # Your PowerShell script commands here
           pwsh -File ./scripts/script1.ps1
           $output = Invoke-Expression -Command "./scripts/script1.ps1"
-          $output | ConvertTo-Json | Export-Csv -Path output.csv -Delimiter ";" -Encoding UTF8 -QuoteFields All
+          $output | Export-Csv -Path output.csv -Encoding UTF8 #-QuoteFields All
        azPSVersion: "latest"
 
 

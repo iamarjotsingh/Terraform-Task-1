@@ -23,4 +23,4 @@ $i++
 }
 $Result | FT # alias Format Table
 
-$Result | Export-CSV -Path "/usr/bin/pwsh/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8
+# $Result | Export-CSV -Path "/usr/bin/pwsh/AllAzureVMStatus.CSV" -NoTypeInformation -Encoding UTF8

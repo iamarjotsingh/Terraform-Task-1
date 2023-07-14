@@ -1,47 +1,79 @@
-
-name: 'Intall Package in VM'
-
+name: Run Azure VM Command
 on:
-  workflow_dispatch:
-    
+  push:
+    branches:
+      - main
+
 jobs:
-   pakage_install:
-    name: 'pkg_in_vm'
+  run-command:
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
-    
-    
+      - name: Set up Azure PowerShell
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Run Command on Azure VM
+        run: |
+          # Authenticate to Azure
+          Connect-AzAccount -Credential ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Login Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
-
-    
-    - name: pkg install
-      uses: azure/powershell@v1
-      with:
-       inlineScript: |
-          # Your PowerShell script commands here
-          #pwsh -File ./scripts/script2.ps1
-          pwsh -Command "Install-Module -Name Az -Force -AllowClobber -Scope AllUsers"
-          pwsh -Command "Import-Module -Name Az"
+          # Run the command on Azure VM
           Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -Name 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1' 
-      #     $output = Invoke-Expression -Command "pwsh -File ./scripts/script2.ps1"
-      #     $output | Export-Csv -Path output.csv -NoTypeInformation -Encoding UTF8 #-QuoteFields All
-       azPSVersion: "latest"
 
 
-    # - name: Upload CSV artifact
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: script-output
-    #     path: output.csv
+
+
+
+
+
+
+
+
+
+# name: 'Intall Package in VM'
+
+# on:
+#   workflow_dispatch:
+    
+# jobs:
+#    pakage_install:
+#     name: 'pkg_in_vm'
+#     runs-on: ubuntu-latest
+#     environment: production
+
+#     steps:
+    
+    
+
+#     - name: Checkout
+#       uses: actions/checkout@v3
+
+#     - name: Login Azure
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{secrets.AZURE_CREDENTIALS}}
+#         enable-AzPSSession: true 
+
+    
+#     - name: pkg install
+#       uses: azure/powershell@v1
+#       with:
+#        inlineScript: |
+#           # Your PowerShell script commands here
+#           #pwsh -File ./scripts/script2.ps1
+#           # pwsh -Command "Install-Module -Name Az -Force -AllowClobber -Scope AllUsers"
+#           # pwsh -Command "Import-Module -Name Az"
+#           pwsh -Command "Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -Name 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1' "      #     $output = Invoke-Expression -Command "pwsh -File ./scripts/script2.ps1"
+#       #     $output | Export-Csv -Path output.csv -NoTypeInformation -Encoding UTF8 #-QuoteFields All
+#        azPSVersion: "latest"
+
+
+#     # - name: Upload CSV artifact
+#     #   uses: actions/upload-artifact@v2
+#     #   with:
+#     #     name: script-output
+#     #     path: output.csv
 
 

@@ -145,17 +145,27 @@ jobs:
       with:
        inlineScript: |
         # Get the VM object
-        $resourceGroupName = 'terrform-amar-rg1'
-        $vmName = 'tf-vm'
-        $vm = Get-AzVM -ResourceGroupName $resourceGroupName -Name $vmName
+        # $resourceGroupName = 'terrform-amar-rg1'
+        # $vmName = 'tf-vm'
+        # $vm = Get-AzVM -ResourceGroupName $resourceGroupName -Name $vmName
 
-        # Install the package using PowerShell remoting
-        $installScript = {
-          $packageName = 'git'
-          $packageArgs = '/q'  # Specify any additional arguments for package installation
-          Start-Process -FilePath 'choco' -ArgumentList "install $packageName $packageArgs" -Wait
-        }
-        Invoke-AzVMRunCommand -ResourceGroupName $resourceGroupName -VMName $vmName -CommandId 'RunPowerShellScript' -ScriptPath $installScript
+        # # Install the package using PowerShell remoting
+        # $installScript = {
+        #   $packageName = 'git'
+        #   $packageArgs = '/q'  # Specify any additional arguments for package installation
+        #   Start-Process -FilePath 'choco' -ArgumentList "install $packageName $packageArgs" -Wait
+        # }
+        Get-ExecutionPolicy
+
+        Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+
+        Install-Module posh-git -Scope CurrentUser -Force
+
+        Import-Module posh-git
+
+        Add-PoshGitToProfile -AllHosts​​​​​​​
+
+        Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -VMName 'tf-vm' #-CommandId 'RunPowerShellScript' -ScriptPath $installScript
        azPSVersion: "latest"
 
 

@@ -7,7 +7,7 @@ on:
 jobs:
    pakage_install:
     name: 'pkg_in_vm'
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: production
 
     steps:

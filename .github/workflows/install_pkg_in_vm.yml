@@ -25,15 +25,14 @@ jobs:
 
     
     - name: pkg install
-      uses: azure/CLI@v1
+      uses: azure/powershell@v1
       with:
-        azcliversion: 2.32.0
-        inlineScript: |
+       inlineScript: |
           # Your PowerShell script commands here
           Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -Name 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1' 
       #     $output = Invoke-Expression -Command "pwsh -File ./scripts/script2.ps1"
       #     $output | Export-Csv -Path output.csv -NoTypeInformation -Encoding UTF8 #-QuoteFields All
-       #azPSVersion: "latest"
+       azPSVersion: "latest"
 
 
     # - name: Upload CSV artifact

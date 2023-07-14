@@ -157,7 +157,7 @@ jobs:
         # }
         Get-ExecutionPolicy
 
-        Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+        # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 
         Install-Module posh-git -Scope CurrentUser -Force
 

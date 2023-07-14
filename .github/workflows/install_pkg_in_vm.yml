@@ -17,7 +17,9 @@ jobs:
       - name: Run Command on Azure VM
         shell: pwsh
         run: |
-         
+          
+          pwsh -Command "Install-Module -Name Az -AllowClobber -Scope CurrentUser -Force"
+          pwsh -Command "Import-Module -Name Az"
           # Run the command on Azure VM
           Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -Name 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1' 
 

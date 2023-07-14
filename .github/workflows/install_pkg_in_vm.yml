@@ -17,7 +17,7 @@ jobs:
       - name: Run Command on Azure VM
         run: |
           # Authenticate to Azure
-          Connect-AzAccount -Credential ${{ secrets.AZURE_CREDENTIALS }}
+          Connect-AzAccount -Credential ${{ secrets.AZURE_CREDENTIALS | fromJSON }}
 
           # Run the command on Azure VM
           Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -Name 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1' 

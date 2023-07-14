@@ -6,7 +6,7 @@ on:
 
 jobs:
   install-package:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Azure PowerShell

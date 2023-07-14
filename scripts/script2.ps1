@@ -1,8 +1,10 @@
 Get-ExecutionPolicy
 
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
 
 Install-Module posh-git -Scope CurrentUser -Force
+
+Install-Module PowerShellGet -Force -SkipPublisherCheck
 
 Import-Module posh-git
 

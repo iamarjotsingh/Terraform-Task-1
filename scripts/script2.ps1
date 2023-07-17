@@ -1,15 +1,17 @@
-Start-Sleep -Seconds 90
+
 Get-ExecutionPolicy
-Start-Sleep -Seconds 90
-Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
-Start-Sleep -Seconds 90
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+
 Install-Module posh-git -Scope CurrentUser -Force
-Start-Sleep -Seconds 90
+
 Install-Module PowerShellGet -Force -SkipPublisherCheck
-Start-Sleep -Seconds 90
+
 Import-Module posh-git
-Start-Sleep -Seconds 90
+
 Add-PoshGitToProfile -AllHosts​​​​​​​
+
+
 
 
 

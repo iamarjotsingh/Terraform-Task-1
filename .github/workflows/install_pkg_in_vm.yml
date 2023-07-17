@@ -1,3 +1,47 @@
+name: Install Docker on Azure Linux VM
+on:
+  workflow_dispatch:
+
+jobs:
+  install-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Install Docker on Azure VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo apt-get update
+            sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+            sudo apt-get update
+            sudo apt-get install -y docker-ce
+            docker version
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # name: Install Package on Azure Windows VM
 # on:
 #   push:
@@ -115,39 +159,41 @@
 
 
 
-name: 'Intall Package in VM'
+# name: 'Intall Package in VM'
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
     
-jobs:
-   pakage_install:
-    name: 'pkg_in_vm'
-    runs-on: ubuntu-latest
-    environment: production
+# jobs:
+#    pakage_install:
+#     name: 'pkg_in_vm'
+#     runs-on: ubuntu-latest
+#     environment: production
 
-    steps:
+#     steps:
     
     
 
-    - name: Checkout
-      uses: actions/checkout@v3
+#     - name: Checkout
+#       uses: actions/checkout@v3
 
-    - name: Login Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-        enable-AzPSSession: true 
+#     - name: Login Azure
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{secrets.AZURE_CREDENTIALS}}
+#         enable-AzPSSession: true 
 
+#     - name: install package
+#       run: apt-get -y install 
     
-    - name: pkg install
-      uses: azure/powershell@v1
-      with:
-       inlineScript: |
+    # - name: pkg install
+    #   uses: azure/powershell@v1
+    #   with:
+    #    inlineScript: |
         
 
-        Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -VMName 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1'
-       azPSVersion: "latest"
+    #      Invoke-AzVMRunCommand -ResourceGroupName 'terrform-amar-rg1' -VMName 'tf-vm' -CommandId 'RunPowerShellScript' -ScriptPath './scripts/script2.ps1'
+    #    azPSVersion: "latest"
 
 
 # # #     # - name: Upload CSV artifact

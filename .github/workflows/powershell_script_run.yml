@@ -25,7 +25,8 @@ jobs:
       with:
        inlineScript: |
           
-          # $scriptContent = @"
+          
+          $output=@()
           # PowerShell script content here
           $allVms = Get-AzVM
 
@@ -46,13 +47,14 @@ jobs:
               Write-Output "Status: $($vmDetails.status)"
               
           }
-          # "@
-          # echo $scriptContent > script.ps1
-          # pwsh -File script.ps1
+          $outout | FT
+          Write-Output $output > output.txt
+
+          
        azPSVersion: "latest"
 
-    # - name: Upload CSV artifact
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: script-output
-    #     path: output.txt
+    - name: Save output as artifact
+      uses: actions/upload-artifact@v2
+      with:
+         name: Workflow Output
+         path: output.txt

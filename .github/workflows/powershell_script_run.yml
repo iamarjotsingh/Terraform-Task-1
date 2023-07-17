@@ -25,7 +25,7 @@ jobs:
       with:
        inlineScript: |
           
-          $scriptContent = @"
+          # $scriptContent = @"
           # PowerShell script content here
           $allVms = Get-AzVM
 
@@ -46,9 +46,9 @@ jobs:
               Write-Output "Status: $($vmDetails.status)"
               
           }
-          "@
-          echo $scriptContent > script.ps1
-          pwsh -File script.ps1
+          # "@
+          # echo $scriptContent > script.ps1
+          # pwsh -File script.ps1
        azPSVersion: "latest"
 
     # - name: Upload CSV artifact

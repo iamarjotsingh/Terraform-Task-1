@@ -6,7 +6,7 @@ on:
 jobs:
    powershell_script:
     name: 'Powershell Script Execution'
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: production
 
     steps:
@@ -53,6 +53,7 @@ jobs:
 
           # "@
           # echo $scriptContent > script.ps1
+          
           ./scripts/script1.ps1
 
 

@@ -29,6 +29,8 @@
 
 # Install Azure PowerShell module if not already installed
 # Uncomment the following line if Azure PowerShell module is not installed
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
 Install-Module -Name Az -AllowClobber -Scope CurrentUser
 Import-Module -Name Az
 

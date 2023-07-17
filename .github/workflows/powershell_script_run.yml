@@ -22,19 +22,42 @@ jobs:
 
     
     - name: Run PowerShell script
-      id: powershell
-      uses: azure/powershell@v1
-      with:
-       inlineScript: |
-          # Your PowerShell script commands here
-          pwsh -File ./scripts/script1.ps1
-          $output = Invoke-Expression -Command "pwsh -File ./scripts/script1.ps1"
-          $output | Export-Csv -Path output.csv -NoTypeInformation -Encoding UTF8 #-QuoteFields All
-       azPSVersion: "latest"
+      shell: pwsh
+      run: |
+          # Replace script-content with the content of your PowerShell script
+          $scriptContent = @"
+          # PowerShell script content here
+          
+          $Result = @()
+          #Get all Resource groups
+          $AllRGs = Get-AzResourceGroup
+          $TotalGroups = $AllRGs.Count
+          $i = 1 
+          ForEach ($RG in $AllRGs) {
+          Write-Progress -Activity "Processing $($RG.ResourceGroupName)" -Status "$i out of $TotalGroups Resource groups completed"
+          #Fetch virtual machines in the group
+          $VMList = Get-AzVM -ResourceGroupName $RG.ResourceGroupName -Status
+            
+          ForEach ($VM in $VMList) {
+          $Result += New-Object PSObject -property $([ordered]@{ 
+          VMName = $VM.Name
+          VMStatus  = $VM.PowerState
+          ProvisioningState = $VM.ProvisioningState
+          ResourceGroup = $VM.ResourceGroupName
+          Location = $VM.Location
+          })
+          }
+          $i++
+          }
+          $Result | FT
+
+          "@
+          echo $scriptContent > script.ps1
+          pwsh -File script.ps1
 
 
-    - name: Upload CSV artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: script-output
-        path: output.csv
+    # - name: Upload CSV artifact
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: script-output
+    #     path: output.txt

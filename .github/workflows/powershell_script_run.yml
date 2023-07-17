@@ -30,7 +30,7 @@ jobs:
           $allVms = Get-AzVM
 
           # Iterate through each VM and retrieve its details
-          foreach ($vm in $allVms) {
+          foreach($vm in $allVms) {
               $vmName = $vm.Name
               $resourceGroupName = $vm.ResourceGroupName
 

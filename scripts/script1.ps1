@@ -29,7 +29,8 @@
 
 # Install Azure PowerShell module if not already installed
 # Uncomment the following line if Azure PowerShell module is not installed
-Install-Module -Name Az
+Install-Module -Name Az -AllowClobber -Scope CurrentUser
+Import-Module -Name Az
 
 # Connect to your Azure account
 # Connect-AzAccount

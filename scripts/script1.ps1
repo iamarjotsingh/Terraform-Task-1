@@ -1,3 +1,5 @@
+Install-Module -Name Az -AllowClobber -Scope CurrentUser
+Import-Module -Name Az
 
 
 $Result = @()

@@ -54,7 +54,32 @@ jobs:
           # "@
           # echo $scriptContent > script.ps1
           az login --service-principal --username "$AZURE_CLIENT_ID" --password "$AZURE_CLIENT_SECRET" --tenant "$AZURE_TENANT_ID"
-          ./scripts/script1.ps1
+          # ./scripts/script1.ps1
+          # Replace script-content with the content of your PowerShell script
+          $scriptContent = @"
+          # PowerShell script content here
+          $allVms = Get-AzVM
+
+          # Iterate through each VM and retrieve its details
+          foreach ($vm in $allVms) {
+              $vmName = $vm.Name
+              $resourceGroupName = $vm.ResourceGroupName
+
+              # Get the VM details
+              $vmDetails = Get-AzVM -ResourceGroupName $resourceGroupName -Name $vmName
+
+              # Output the VM details
+              Write-Output "VM Name: $($vmDetails.Name)"
+              Write-Output "Location: $($vmDetails.Location)"
+              
+              Write-Output "Resource Group Name: $resourceGroupName"
+              
+              Write-Output "Status: $($vmDetails.status)"
+              
+          }
+          "@
+          echo $scriptContent > script.ps1
+          pwsh -File script.ps1
 
 
     # - name: Upload CSV artifact

@@ -53,7 +53,7 @@ jobs:
 
           # "@
           # echo $scriptContent > script.ps1
-          pwsh -File ./scripts/script1.ps1
+          ./scripts/script1.ps1
 
 
     # - name: Upload CSV artifact
